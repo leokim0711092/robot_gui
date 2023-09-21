@@ -49,7 +49,7 @@ void CV::run() {
     frame = cv::Scalar(49, 52, 49);
 //Info
     // Create window at (40, 30) with size 250x180 (width x height) and title
-    cvui::window(frame, 40, 30, 250, 180, "Info: " );
+    cvui::window(frame, 40, 30, 250, 220, "Info: " );
     //print info 
     cvui::printf(frame, 45, 50, 0.4, 0xffffff, rb_da->data_field_01.c_str());
     cvui::printf(frame, 45, 70, 0.4, 0xffffff, rb_da->data_field_02.c_str());
@@ -59,63 +59,64 @@ void CV::run() {
     cvui::printf(frame, 45, 150, 0.4, 0xffffff, rb_da->data_field_06.c_str());
     cvui::printf(frame, 45, 170, 0.4, 0xffffff, rb_da->data_field_07.c_str());
     cvui::printf(frame, 45, 190, 0.4, 0xffffff, rb_da->data_field_08.c_str());
-    
+    cvui::printf(frame, 45, 210, 0.4, 0xffffff, rb_da->data_field_09.c_str());
+    cvui::printf(frame, 45, 230, 0.4, 0xffffff, rb_da->data_field_10.c_str());
 //Velocity Print
-    cvui::window(frame, 25, 410, 140, 40, "Linear Velocity: " );   
-    cvui::window(frame, 170, 410, 140, 40, "Angular Velocity " );   
+    cvui::window(frame, 25, 460, 140, 40, "Linear Velocity: " );   
+    cvui::window(frame, 170, 460, 140, 40, "Angular Velocity " );   
     //print velocity
-    cvui::printf(frame, 50, 435, 0.4, 0xff0000,"%0.2f m/sec" ,vel_da->linear.x);
-    cvui::printf(frame, 190, 435, 0.4, 0xff0000,"%0.2f m/sec" ,vel_da->angular.z); 
+    cvui::printf(frame, 50, 485, 0.4, 0xff0000,"%0.2f m/sec" ,vel_da->linear.x);
+    cvui::printf(frame, 190, 485, 0.4, 0xff0000,"%0.2f m/sec" ,vel_da->angular.z); 
 
 //Velocity pub button
     ros::Rate l(0.5);
-    if (cvui::button(frame, 125, 210, 80,60 ," Forward ")) {
+    if (cvui::button(frame, 125, 260, 80,60 ," Forward ")) {
       //The button was clicked, update the Twist message
         if(c_vl.linear.x<0 || c_vl.angular.z != 0 ) {c_vl.linear.x = 0; c_vl.angular.z =0; };
         c_vl.linear.x += 0.05;
         od_pub.publish(c_vl);
     }
-    if (cvui::button(frame, 125, 275, 80,60 ," Stop ")) {
+    if (cvui::button(frame, 125, 325, 80,60 ," Stop ")) {
       // The button was clicked, update the Twist message
         c_vl.linear.x = 0;
         c_vl.angular.z =0;
         od_pub.publish(c_vl);
     }
-    if (cvui::button(frame, 210, 275, 80,60 ," Right ")) {
+    if (cvui::button(frame, 210, 325, 80,60 ," Right ")) {
         c_vl.linear.x = 0.2;
         c_vl.angular.z = -0.5;
         od_pub.publish(c_vl);
     }
-    if (cvui::button(frame, 40, 275, 80 , 60 ," Left ")) {
+    if (cvui::button(frame, 40, 325, 80 , 60 ," Left ")) {
         c_vl.linear.x = 0.2;
         c_vl.angular.z = 0.5;
         od_pub.publish(c_vl);
     }
-    if (cvui::button(frame, 125, 340, 80 , 60 ," Back ")) {
+    if (cvui::button(frame, 125, 390, 80 , 60 ," Back ")) {
         if(c_vl.linear.x>0 || c_vl.angular.z != 0) {c_vl.linear.x = 0; c_vl.angular.z =0; };
          c_vl.linear.x -= 0.05;
         od_pub.publish(c_vl);
     }
 
 // Estimated position
-    cvui::printf(frame, 25, 460, 0.4, 0xffffff,"Estimated robot position based off odometry");  
-    cvui::window(frame, 25, 480, 100, 100, "X:" );   
-    cvui::window(frame, 130, 480, 100, 100, "Y:" ); 
-    cvui::window(frame, 235, 480, 100, 100, "Z:" ); 
+    cvui::printf(frame, 25, 510, 0.4, 0xffffff,"Estimated robot position based off odometry");  
+    cvui::window(frame, 25, 530, 100, 100, "X:" );   
+    cvui::window(frame, 130, 530, 100, 100, "Y:" ); 
+    cvui::window(frame, 235, 530, 100, 100, "Z:" ); 
 
-    cvui::printf(frame, 50, 540, 1.0, 0xffffff,"%0.1f",od_da->pose.pose.position.x);  
-    cvui::printf(frame, 160, 540, 1.0, 0xffffff,"%0.1f",od_da->pose.pose.position.y);  
-    cvui::printf(frame, 260, 540, 1.0, 0xffffff,"%0.1f",od_da->pose.pose.position.z);   
+    cvui::printf(frame, 50, 590, 1.0, 0xffffff,"%0.1f",od_da->pose.pose.position.x);  
+    cvui::printf(frame, 160, 590, 1.0, 0xffffff,"%0.1f",od_da->pose.pose.position.y);  
+    cvui::printf(frame, 260, 590, 1.0, 0xffffff,"%0.1f",od_da->pose.pose.position.z);   
 // Distance Traveled call
-    cvui::printf(frame, 25, 585, 0.4, 0xffffff,"Distance Traveled");  
+    cvui::printf(frame, 25, 635, 0.4, 0xffffff,"Distance Traveled");  
 
     // cvui::window(frame, 235, 560, 100, 100, "Z:" ); 
-    cvui::window(frame, 135, 600, 200, 100, "Distance in meters" ); 
-    if (cvui::button(frame, 25, 600, 100,100 ," Call ")) {
+    cvui::window(frame, 135, 650, 200, 100, "Distance in meters" ); 
+    if (cvui::button(frame, 25, 650, 100,100 ," Call ")) {
         gd_service.call(srv);
         rc = srv.response.message; 
     }
-    cvui::printf(frame, 240, 640, 1.0, 0xffffff,rc.c_str());
+    cvui::printf(frame, 240, 690, 1.0, 0xffffff,rc.c_str());
 
 // Update cvui internal stuff
     cvui::update();
