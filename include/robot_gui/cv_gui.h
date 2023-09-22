@@ -69,35 +69,31 @@ void CV::run() {
     cvui::printf(frame, 190, 485, 0.4, 0xff0000,"%0.2f m/sec" ,vel_da->angular.z); 
 
 //Velocity pub button
-    ros::Rate l(0.5);
     if (cvui::button(frame, 125, 260, 80,60 ," Forward ")) {
       //The button was clicked, update the Twist message
         if(c_vl.linear.x<0 || c_vl.angular.z != 0 ) {c_vl.linear.x = 0; c_vl.angular.z =0; };
         c_vl.linear.x += 0.05;
-        od_pub.publish(c_vl);
     }
     if (cvui::button(frame, 125, 325, 80,60 ," Stop ")) {
       // The button was clicked, update the Twist message
         c_vl.linear.x = 0;
         c_vl.angular.z =0;
-        od_pub.publish(c_vl);
     }
-    if (cvui::button(frame, 210, 325, 80,60 ," Right ")) {
+     if (cvui::button(frame, 210, 325, 80,60 ," Right ")) {
         c_vl.linear.x = 0.2;
         c_vl.angular.z = -0.5;
-        od_pub.publish(c_vl);
     }
-    if (cvui::button(frame, 40, 325, 80 , 60 ," Left ")) {
+     if (cvui::button(frame, 40, 325, 80 , 60 ," Left ")) {
         c_vl.linear.x = 0.2;
         c_vl.angular.z = 0.5;
-        od_pub.publish(c_vl);
     }
     if (cvui::button(frame, 125, 390, 80 , 60 ," Back ")) {
         if(c_vl.linear.x>0 || c_vl.angular.z != 0) {c_vl.linear.x = 0; c_vl.angular.z =0; };
          c_vl.linear.x -= 0.05;
-        od_pub.publish(c_vl);
     }
+    od_pub.publish(c_vl);
 
+    
 // Estimated position
     cvui::printf(frame, 25, 510, 0.4, 0xffffff,"Estimated robot position based off odometry");  
     cvui::window(frame, 25, 530, 100, 100, "X:" );   
