@@ -80,12 +80,23 @@ void CV::run() {
         c_vl.angular.z =0;
     }
      if (cvui::button(frame, 210, 325, 80,60 ," Right ")) {
-        c_vl.linear.x = 0.2;
-        c_vl.angular.z = -0.5;
+        if(c_vl.linear.x <0){
+            c_vl.linear.x -= 0.1;
+            c_vl.angular.z -= 0.1;
+        }
+        else{
+        c_vl.linear.x += 0.1;
+        c_vl.angular.z -= 0.1;}
     }
      if (cvui::button(frame, 40, 325, 80 , 60 ," Left ")) {
-        c_vl.linear.x = 0.2;
-        c_vl.angular.z = 0.5;
+       
+        if(c_vl.linear.x <0){
+            c_vl.linear.x -= 0.1;
+            c_vl.angular.z += 0.1;
+        }else {
+            c_vl.linear.x += 0.1;
+            c_vl.angular.z += 0.1;
+            }
     }
     if (cvui::button(frame, 125, 390, 80 , 60 ," Back ")) {
         if(c_vl.linear.x>0 || c_vl.angular.z != 0) {c_vl.linear.x = 0; c_vl.angular.z =0; };
